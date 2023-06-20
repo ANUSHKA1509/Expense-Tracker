@@ -4,12 +4,78 @@
   <title>Expense Tracker - Recent Transactions</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
-    /* Styles remain the same */
+    body {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: lightblue;
+      height: 100px;
+      text-align: center;
+      line-height: 100px;
+      color: white;
+      font-size: 28px;
+    }
+    
+    .header .home-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .header .profile {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    
+    h1 {
+      margin-bottom: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+      background-color: lightblue;
+      color: white;
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <!-- Header code remains the same -->
+    <i class="fas fa-home home-icon" onclick="goToDashboard()"></i>
+    <i class="fas fa-coins"></i> Expense Tracker
+    <div class="profile" onclick="toggleDropdown()">
+      <i class="fas fa-user profile-pic"></i>
+      <span id="username"></span>
+    </div>
+    <div class="dropdown" id="dropdown" style="display: none;">
+      <a href="logout.html">Logout</a>
+      <!-- Add other dropdown items if needed -->
+    </div>
   </div>
   <div class="container">
     <h1>Recent Transactions</h1>
@@ -28,7 +94,6 @@
     </table>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     // Example transaction data for demonstration
     const transactionData = [
@@ -56,17 +121,20 @@
 
     // Function to toggle the profile dropdown menu
     function toggleDropdown() {
-      // Code remains the same
+      const dropdown = document.getElementById('dropdown');
+      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
     }
-
+    
     // Function to extract the name from the URL parameters
     function getName() {
-      // Code remains the same
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('name') || '';
     }
-
+    
     // Function to navigate to the dashboard page
     function goToDashboard() {
-      // Code remains the same
+      // Replace with the appropriate URL for the dashboard page
+      window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
     }
 
     const username = document.getElementById('username');
