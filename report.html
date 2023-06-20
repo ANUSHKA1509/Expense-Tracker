@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker - Reports</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: lightblue;
+      height: 100px;
+      text-align: center;
+      color: white;
+      font-size: 28px;
+      position: relative;
+    }
+
+    .header .home-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .header .profile {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .header .header-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .header .header-title i {
+      margin-right: 5px;
+    }
+    
+    .container {
+      padding: 20px;
+    }
+
+    .report-links {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .report-links a {
+      text-decoration: none;
+      padding: 10px 20px;
+      background-color: lightgray;
+      color: black;
+      border-radius: 5px;
+    }
+
+    .investments {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <i class="fas fa-home home-icon" onclick="goToDashboard()"></i>
+    <div class="header-title">
+      <i class="fas fa-coins"></i> Expense Tracker
+    </div>
+    <div class="profile" onclick="toggleDropdown()">
+      <i class="fas fa-user profile-pic"></i>
+      <span id="username"></span>
+    </div>
+    <div class="dropdown" id="dropdown" style="display: none;">
+      <a href="logout.html">Logout</a>
+      <!-- Add other dropdown items if needed -->
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Reports</h1>
+
+    <div class="report-links">
+      <a href="monthly-report.pdf" download>Download Monthly Report</a>
+      <a href="yearly-report.pdf" download>Download Yearly Report</a>
+    </div>
+
+    <div class="investments">
+      <h2>Investments</h2>
+      <ul>
+        <li><a href="https://example.com/investment1" target="_blank">Investment 1</a></li>
+        <li><a href="https://example.com/investment2" target="_blank">Investment 2</a></li>
+        <li><a href="https://example.com/investment3" target="_blank">Investment 3</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdown');
+      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function getName() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('name') || '';
+    }
+    
+    function goToDashboard() {
+      // Replace with the appropriate URL for the dashboard page
+      window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
+    }
+
+    const username = document.getElementById('username');
+    username.textContent = getName();
+  </script>
+</body>
+</html>

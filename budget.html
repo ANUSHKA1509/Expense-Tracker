@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker - Budgeting</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: lightblue;
+      height: 100px;
+      text-align: center;
+      color: white;
+      font-size: 28px;
+      position: relative;
+    }
+
+    .header .home-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .header .profile {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .header .header-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .header .header-title i {
+      margin-right: 5px;
+    }
+    
+    .container {
+      padding: 20px;
+    }
+
+    .budget-planner,
+    .savings-calculator,
+    .data-visualization {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <i class="fas fa-home home-icon" onclick="goToDashboard()"></i>
+    <div class="header-title">
+      <i class="fas fa-coins"></i> Expense Tracker
+    </div>
+    <div class="profile" onclick="toggleDropdown()">
+      <i class="fas fa-user profile-pic"></i>
+      <span id="username"></span>
+    </div>
+    <div class="dropdown" id="dropdown" style="display: none;">
+      <a href="logout.html">Logout</a>
+      <!-- Add other dropdown items if needed -->
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Budgeting</h1>
+
+    <div class="budget-planner">
+      <h2>Budget Planner</h2>
+      <!-- Add budget planning tool to create a personalized budget and set financial goals -->
+      <!-- Example: -->
+      <form id="budget-form">
+        <label for="income-input">Monthly Income:</label>
+        <input type="number" id="income-input" placeholder="Enter your monthly income" required>
+
+        <label for="expenses-input">Monthly Expenses:</label>
+        <input type="number" id="expenses-input" placeholder="Enter your monthly expenses" required>
+
+        <button type="submit">Create Budget</button>
+      </form>
+    </div>
+
+    <div class="savings-calculator">
+      <h2>Savings Calculator</h2>
+      <!-- Add savings calculator to calculate monthly savings for financial goals -->
+      <!-- Example: -->
+      <form id="savings-form">
+        <label for="goal-input">Savings Goal:</label>
+        <input type="number" id="goal-input" placeholder="Enter your savings goal" required>
+
+        <label for="duration-input">Savings Duration (in months):</label>
+        <input type="number" id="duration-input" placeholder="Enter the duration for saving" required>
+
+        <button type="submit">Calculate</button>
+      </form>
+    </div>
+
+    <div class="data-visualization">
+      <h2>Visualize</h2>
+      <!-- Add graphs, charts, and visuals to represent financial data and track progress -->
+      <!-- Example: -->
+      <canvas id="expenses-chart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdown');
+      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function getName() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('name') || '';
+    }
+    
+    function goToDashboard() {
+      // Replace with the appropriate URL for the dashboard page
+      window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
+    }
+
+    const username = document.getElementById('username');
+    username.textContent = getName();
+
+    // Example budget planning form submission
+    const budgetForm = document.getElementById('budget-form');
+    budgetForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const income = parseFloat(document.getElementById('income-input').value);
+      const expenses = parseFloat(document.getElementById('expenses-input').value);
+
+      // Perform necessary calculations and update the budget
+
+      // Example: Display the budget details
+      alert(`Budget created:\nIncome: $${income}\nExpenses: $${expenses}`);
+    });
+
+    // Example savings calculator form submission
+    const savingsForm = document.getElementById('savings-form');
+    savingsForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const goal = parseFloat(document.getElementById('goal-input').value);
+      const duration = parseInt(document.getElementById('duration-input').value);
+
+      // Perform necessary calculations and display the savings plan
+
+      // Example: Display the savings plan
+      alert(`Savings Plan:\nGoal: $${goal}\nDuration: ${duration} months`);
+    });
+
+    // Example data visualization using Chart.js
+    const expensesChart = new Chart(document.getElementById('expenses-chart'), {
+      type: 'bar',
+      data: {
+        labels: ['Category 1', 'Category 2', 'Category 3'], // Replace with your category labels
+        datasets: [{
+          label: 'Expenses',
+          data: [200, 300, 150], // Replace with your expense data
+          backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(75, 192, 192, 0.6)'] // Customize the colors as needed
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

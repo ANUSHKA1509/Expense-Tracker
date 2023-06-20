@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Expense Tracker - Login</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<style>
+		body {
+			background-color: white;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.header {
+			background-color: lightblue;
+			height: 100px;
+			text-align: center;
+			line-height: 100px;
+			color: white;
+			font-size: 36px;
+			margin-bottom: 20px;
+		}
+		
+		.container {
+			width: 50%;
+			margin: 0 auto;
+			padding: 20px;
+			border: 2px solid black;
+			border-radius: 10px;
+			display: flex;
+			flex-direction: column;
+		}
+		
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+		
+		input[type="text"],
+		input[type="tel"],
+		input[type="password"] {
+			display: block;
+			width: calc(100% - 20px);
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin-bottom: 10px;
+		}
+
+		input[type="submit"] {
+			background-color: lightblue;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-top: 10px;
+			align-self: flex-end;
+		}
+		
+		input[type="submit"]:hover {
+			background-color: #007bff;
+		}
+		
+		.fa-coins {
+			font-size: 48px;
+			margin-right: 10px;
+		}
+		
+		.error {
+			color: red;
+			margin-top: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<i class="fas fa-coins"></i>Expense Tracker
+	</div>
+	<div class="container">
+		<form id="loginForm" method="get">
+			<label for="name">Name</label>
+			<input type="text" id="name" name="name" required>
+			<span class="error" id="nameError"></span>
+
+			<label for="mobile">Mobile Number</label>
+			<input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+			<span class="error" id="mobileError"></span>
+			
+			<label for="password">Password</label>
+			<input type="password" id="password" name="password" required>
+			<span class="error" id="passwordError"></span>
+			
+			<div style="display: flex; justify-content: flex-end; width: 100%;">
+				<input type="submit" value="Submit">
+			</div>
+		</form>
+	</div>
+	<script>
+		const form = document.getElementById('loginForm');
+		const nameInput = document.getElementById('name');
+		const mobileInput = document.getElementById('mobile');
+		const passwordInput = document.getElementById('password');
+		const nameError = document.getElementById('nameError');
+		const mobileError = document.getElementById('mobileError');
+		const passwordError = document.getElementById('passwordError');
+
+		const validCredentials = {
+			"1234567890": { name: "John Doe", password: "password123" },
+			"9876543210": { name: "Jane Smith", password: "pass456" },
+			"5555555555": { name: "Alice Johnson", password: "abc@123" }
+		};
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+
+			const name = nameInput.value.trim();
+			const mobile = mobileInput.value.trim();
+			const password = passwordInput.value.trim();
+
+			let hasError = false;
+			nameError.textContent = '';
+			mobileError.textContent = '';
+			passwordError.textContent = '';
+
+			if (!validCredentials[mobile]) {
+				mobileError.textContent = 'Invalid mobile number';
+				hasError = true;
+			}
+
+			if (!hasError && validCredentials[mobile].name !== name) {
+				nameError.textContent = 'Invalid name';
+				hasError = true;
+			}
+
+			if (!hasError && validCredentials[mobile].password !== password) {
+				passwordError.textContent = 'Invalid password';
+				hasError = true;
+			}
+
+			if (!hasError) {
+				form.action = `dashboard.html?mobile=${encodeURIComponent(mobile)}`;
+				form.submit();
+			}
+		});
+	</script>
+</body>
+</html>

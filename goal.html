@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker - Goals</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: lightblue;
+      height: 100px;
+      text-align: center;
+      color: white;
+      font-size: 28px;
+      position: relative;
+    }
+
+    .header .home-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .header .profile {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .header .header-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .header .header-title i {
+      margin-right: 5px;
+    }
+    
+    .container {
+      padding: 20px;
+    }
+
+    .goal-form {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <i class="fas fa-home home-icon" onclick="goToDashboard()"></i>
+    <div class="header-title">
+      <i class="fas fa-coins"></i> Expense Tracker
+    </div>
+    <div class="profile" onclick="toggleDropdown()">
+      <i class="fas fa-user profile-pic"></i>
+      <span id="username"></span>
+    </div>
+    <div class="dropdown" id="dropdown" style="display: none;">
+      <a href="logout.html">Logout</a>
+      <!-- Add other dropdown items if needed -->
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Goals</h1>
+
+    <div class="goal-form">
+      <h2>Set a New Goal</h2>
+      <form id="goal-form">
+        <label for="goal-input">Goal:</label>
+        <input type="text" id="goal-input" placeholder="Enter your goal" required>
+
+        <label for="amount-input">Amount:</label>
+        <input type="number" id="amount-input" placeholder="Enter the amount" required>
+
+        <button type="submit">Set Goal</button>
+      </form>
+    </div>
+
+    <div id="goals-list">
+      <h2>Your Goals</h2>
+      <ul id="goals"></ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdown');
+      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function getName() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('name') || '';
+    }
+    
+    function goToDashboard() {
+      // Replace with the appropriate URL for the dashboard page
+      window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
+    }
+
+    const username = document.getElementById('username');
+    username.textContent = getName();
+
+    const goalForm = document.getElementById('goal-form');
+    const goalsList = document.getElementById('goals');
+
+    goalForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const goalInput = document.getElementById('goal-input');
+      const amountInput = document.getElementById('amount-input');
+
+      const goal = goalInput.value;
+      const amount = parseFloat(amountInput.value);
+
+      // Create a new goal item and add it to the goals list
+      const goalItem = document.createElement('li');
+      goalItem.textContent = `${goal}: $${amount}`;
+      goalsList.appendChild(goalItem);
+
+      // Clear the form inputs
+      goalInput.value = '';
+      amountInput.value = '';
+    });
+  </script>
+</body>
+</html>

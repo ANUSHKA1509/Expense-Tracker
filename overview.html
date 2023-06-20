@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker - Overview</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: lightblue;
+      height: 100px;
+      text-align: center;
+      line-height: 100px;
+      color: white;
+      font-size: 28px;
+    }
+    
+    .header .home-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .header .profile {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    
+    h1 {
+      margin-bottom: 20px;
+    }
+    
+    canvas {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <i class="fas fa-home home-icon" onclick="goToDashboard()"></i>
+    <i class="fas fa-coins"></i> Expense Tracker
+    <div class="profile" onclick="toggleDropdown()">
+      <i class="fas fa-user profile-pic"></i>
+      <span id="username"></span>
+    </div>
+    <div class="dropdown" id="dropdown" style="display: none;">
+      <a href="logout.html">Logout</a>
+      <!-- Add other dropdown items if needed -->
+    </div>
+  </div>
+  <div class="container">
+    <h1>Overview</h1>
+    <div id="summary"></div>
+    <canvas id="pieChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Example data for demonstration
+    const expenseData = [
+      { category: 'Groceries', amount: 200 },
+      { category: 'Entertainment', amount: 100 },
+      { category: 'Transportation', amount: 150 },
+      // Add more expense data as needed
+    ];
+
+    // Calculate total amount spent
+    const totalAmount = expenseData.reduce((total, expense) => total + expense.amount, 0);
+
+    // Calculate average daily spending (assuming 30 days in a month)
+    const averageDailySpending = totalAmount / 30;
+
+    // Example previous period data for demonstration
+    const previousPeriodTotal = 1500;
+
+    // Calculate significant change in spending compared to previous period
+    const changePercentage = ((totalAmount - previousPeriodTotal) / previousPeriodTotal) * 100;
+
+    // Display summary information
+    const summaryContainer = document.getElementById('summary');
+    summaryContainer.innerHTML = `
+      <p>Total Amount Spent: $${totalAmount}</p>
+      <p>Average Daily Spending: $${averageDailySpending.toFixed(2)}</p>
+      <p>Change Compared to Previous Period: ${changePercentage.toFixed(2)}%</p>
+    `;
+
+    // Prepare data for the pie chart
+    const categoryLabels = expenseData.map(expense => expense.category);
+    const expenseAmounts = expenseData.map(expense => expense.amount);
+
+    // Create the pie chart
+    const ctx = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: categoryLabels,
+        datasets: [
+          {
+            data: expenseAmounts,
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#9C27B0', '#FF5722'],
+          },
+        ],
+      },
+    });
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdown');
+      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function getName() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('name') || '';
+    }
+    
+    function goToDashboard() {
+      // Replace with the appropriate URL for the dashboard page
+      window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
+    }
+
+    const username = document.getElementById('username');
+    username.textContent = getName();
+  </script>
+</body>
+</html>
