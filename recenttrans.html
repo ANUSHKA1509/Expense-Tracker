@@ -94,7 +94,24 @@
     </table>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+    // Retrieve transaction data and generate table rows
+    $.getJSON("gettransactions.php", function(data) {
+      var tableRows = "";
+      $.each(data, function(key, value) {
+        tableRows += "<tr>";
+        tableRows += "<td>" + value.date + "</td>";
+        tableRows += "<td>" + value.category + "</td>";
+        tableRows += "<td>$" + value.amount + "</td>";
+        tableRows += "<td>" + value.notes + "</td>";
+        tableRows += "</tr>";
+      });
+      $("#transactionTable").html(tableRows);
+    }).fail(function() {
+      alert("Error: Failed to retrieve transaction data.");
+    });
+
     // Example transaction data for demonstration
     const transactionData = [
       { date: '2023-06-19', category: 'Groceries', amount: 50, notes: 'Bought groceries for the week' },
@@ -112,36 +129,36 @@
         row.innerHTML = `
           <td>${transaction.date}</td>
           <td>${transaction.category}</td>
-          <td>$${transaction.amount}</td>
-          <td>${transaction.notes}</td>
-        `;
-        transactionTable.appendChild(row);
-      });
-    }
+  <td>$${transaction.amount}</td>
+      <td>${transaction.notes}</td>
+    `;
+    transactionTable.appendChild(row);
+  });
+}
 
-    // Function to toggle the profile dropdown menu
-    function toggleDropdown() {
-      const dropdown = document.getElementById('dropdown');
-      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-    }
-    
-    // Function to extract the name from the URL parameters
-    function getName() {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('name') || '';
-    }
-    
-    // Function to navigate to the dashboard page
-    function goToDashboard() {
-      // Replace with the appropriate URL for the dashboard page
-      window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
-    }
+// Function to toggle the profile dropdown menu
+function toggleDropdown() {
+  const dropdown = document.getElementById('dropdown');
+  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+}
 
-    const username = document.getElementById('username');
-    username.textContent = getName();
+// Function to extract the name from the URL parameters
+function getName() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('name') || '';
+}
 
-    // Generate the transaction table rows on page load
-    generateTransactionRows();
-  </script>
+// Function to navigate to the dashboard page
+function goToDashboard() {
+  // Replace with the appropriate URL for the dashboard page
+  window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
+}
+
+const username = document.getElementById('username');
+username.textContent = getName();
+
+// Generate the transaction table rows on page load
+generateTransactionRows();
+</script>
 </body>
 </html>
