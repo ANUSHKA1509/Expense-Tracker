@@ -1,26 +1,165 @@
-<?php
-// Retrieve form data
-$category = $_POST['category'];
-$amount = $_POST['amount'];
-$description = $_POST['description'];
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Expense Tracker - Add Expense</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<style>
+		body {
+			background-color: white;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.header {
+			background-color: lightblue;
+			height: 100px;
+			text-align: center;
+			color: white;
+			font-size: 28px;
+			position: relative;
+		}
 
-// Create an associative array with the expense data
-$expense = array(
-    'category' => $category,
-    'amount' => $amount,
-    'description' => $description
-);
+		.header .home-icon {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			color: white;
+			font-size: 24px;
+			cursor: pointer;
+		}
 
-// Read the existing expenses from the JSON file
-$expenses = json_decode(file_get_contents('expenses.json'), true);
+		.header .profile {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			cursor: pointer;
+		}
 
-// Add the new expense to the array
-$expenses[] = $expense;
+		.header .header-title {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+		}
 
-// Save the updated expenses array back to the JSON file
-file_put_contents('expenses.json', json_encode($expenses));
+		.header .header-title i {
+			margin-right: 5px;
+		}
+		
+		.container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			text-align: center;
+		}
 
-// Redirect to the recent transactions page
-header("Location: recenttrans.html");
-exit();
-?>
+		.form-container {
+			width: 400px;
+			margin-top: 20px;
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+			text-align: left;
+		}
+
+		.form-group label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		.form-group input {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+		}
+
+		.form-group select {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+		}
+
+		.form-group button {
+			padding: 10px 20px;
+			font-size: 16px;
+			border-radius: 5px;
+			background-color: lightblue;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<i class="fas fa-home home-icon" onclick="goToDashboard()"></i>
+		<div class="header-title">
+			<i class="fas fa-coins"></i> Expense Tracker
+		</div>
+		<div class="profile" onclick="toggleDropdown()">
+			<i class="fas fa-user profile-pic"></i>
+			<span id="username"></span>
+		</div>
+		<div class="dropdown" id="dropdown" style="display: none;">
+			<a href="logout.html">Logout</a>
+			<!-- Add other dropdown items if needed -->
+		</div>
+	</div>
+	<div class="container">
+		<h1>Add Expense</h1>
+		<div class="form-container">
+			<div class="form-group">
+				<label for="category">Category:</label>
+				<select id="category" name="category">
+					<option value="food">Food</option>
+					<option value="rent">Rent</option>
+					<option value="transportation">Transportation</option>
+					<option value="utilities">Utilities</option>
+					<option value="entertainment">Entertainment</option>
+					<option value="other">Other</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="amount">Amount:</label>
+				<input type="number" id="amount" name="amount" placeholder="Enter the amount" required>
+			</div>
+			<div class="form-group">
+				<label for="description">Description:</label>
+				<input type="text" id="description" name="description" placeholder="Enter a description" required>
+			</div>
+			<div class="form-group">
+				<button type="submit">Add Expense</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		function toggleDropdown() {
+			const dropdown = document.getElementById('dropdown');
+			dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+		}
+		
+		function getName() {
+			const urlParams = new URLSearchParams(window.location.search);
+			return urlParams.get('name') || '';
+		}
+		
+		function goToDashboard() {
+			// Replace with the appropriate URL for the dashboard page
+			window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
+		}
+
+		const username = document.getElementById('username');
+		username.textContent = getName();
+	</script>
+</body>
+</html>
