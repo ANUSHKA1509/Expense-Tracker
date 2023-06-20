@@ -9,7 +9,7 @@
 			margin: 0;
 			padding: 0;
 		}
-		
+
 		.header {
 			background-color: lightblue;
 			height: 100px;
@@ -48,7 +48,7 @@
 		.header .header-title i {
 			margin-right: 5px;
 		}
-		
+
 		.container {
 			display: flex;
 			flex-direction: column;
@@ -147,12 +147,12 @@
 			const dropdown = document.getElementById('dropdown');
 			dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
 		}
-		
+
 		function getName() {
 			const urlParams = new URLSearchParams(window.location.search);
 			return urlParams.get('name') || '';
 		}
-		
+
 		function goToDashboard() {
 			// Replace with the appropriate URL for the dashboard page
 			window.location.href = 'dashboard.html?name=' + encodeURIComponent(getName());
