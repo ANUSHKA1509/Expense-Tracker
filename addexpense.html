@@ -115,33 +115,37 @@
 			<!-- Add other dropdown items if needed -->
 		</div>
 	</div>
-	<div class="container">
-		<h1>Add Expense</h1>
-		<div class="form-container">
-			<div class="form-group">
-				<label for="category">Category:</label>
-				<select id="category" name="category">
-					<option value="food">Food</option>
-					<option value="rent">Rent</option>
-					<option value="transportation">Transportation</option>
-					<option value="utilities">Utilities</option>
-					<option value="entertainment">Entertainment</option>
-					<option value="other">Other</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="amount">Amount:</label>
-				<input type="number" id="amount" name="amount" placeholder="Enter the amount" required>
-			</div>
-			<div class="form-group">
-				<label for="description">Description:</label>
-				<input type="text" id="description" name="description" placeholder="Enter a description" required>
-			</div>
-			<div class="form-group">
-				<button type="submit">Add Expense</button>
-			</div>
-		</div>
-	</div>
+	<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Expense</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Add Expense</h1>
+    <form action="addexpense.php" method="POST">
+      <div class="form-group">
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+          <option value="groceries">Groceries</option>
+          <option value="utilities">Utilities</option>
+          <option value="rent">Rent</option>
+          <option value="entertainment">Entertainment</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" placeholder="Enter the amount" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" placeholder="Enter a description" required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Add Expense</button>
+      </div>
+    </form>
+  </div>
 	<script>
 		function toggleDropdown() {
 			const dropdown = document.getElementById('dropdown');
